@@ -5,8 +5,11 @@ import wrapAsync from '../utils/tryCatchWrapper.js'
 
 export const createShortUrlController = wrapAsync(async (req, res) => {
     const { url } = req.body;
+    if(!url) {
+        return res.status(400).json({ error: 'URL is required'})
+    }
     const shortUrl = await createShortUrlServiceWithoutUser(url);
-    res.status(200).json({shortUrl: APP_URL + shortUrl})
+    res.status(200).json({ shortUrl: APP_URL + shortUrl });
 })
 
 export const redirectFromShortUrl = wrapAsync(async (req, res) => {
