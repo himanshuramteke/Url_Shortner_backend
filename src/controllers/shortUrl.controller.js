@@ -8,6 +8,7 @@ export const createShortUrlController = wrapAsync(async (req, res) => {
    let shortUrl
 
    if(req.user) {
+    console.log('Creating URL for user ID:', req.user._id);
     shortUrl = await createShortUrlServiceWithUser(data.url, req.user._id, data.slug)
    } else {
     shortUrl = await createShortUrlServiceWithoutUser(data.url)
@@ -27,6 +28,6 @@ export const redirectFromShortUrl = wrapAsync(async (req, res) => {
 
 export const createCustomShortUrlController = wrapAsync(async (req, res) => {
     const {url,slug} = req.body
-    const shortUrl = await createShortUrlServiceWithoutUser(url,customUrl)
+    const shortUrl = await createShortUrlServiceWithUser(url,customUrl)
     res.status(200).json({shortUrl : process.env.APP_URL + shortUrl})
 })

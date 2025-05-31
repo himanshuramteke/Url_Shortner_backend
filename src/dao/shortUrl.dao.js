@@ -9,8 +9,11 @@ export const saveShortUrl = async (shortUrl, longUrl, userId) => {
         });
         if(userId) {
             newUrl.user = userId;
+            console.log("Setting user ID for URL:", userId);
         }
-        await newUrl.save();
+        const savedUrl =await newUrl.save();
+        console.log("saved url with data", savedUrl);
+        return savedUrl;
     }catch (err) {
         if(err.code == 11000){
             throw new ConflictError("Short URL already exists")

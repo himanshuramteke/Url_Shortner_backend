@@ -1,7 +1,8 @@
+import { findUserById } from "../dao/user.dao.js";
 import { verifyToken } from "./helper.js";
 
 export const attachUser = async (req, res, next) => {
-    const token = await req.cookies.token;
+    const token = await req.cookies.accessToken;
     if(!token) return next();
 
     try {
