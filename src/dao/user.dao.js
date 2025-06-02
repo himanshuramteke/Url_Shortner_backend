@@ -22,3 +22,20 @@ export const createUser = async (name, email, password) => {
 export const getAllUserUrlsDao = async (id) => {
     return await UrlModel.find({user: id})
 }
+
+export const deleteUrlDao = async (urlId, userId) => {
+    const deletedUrl = await UrlModel.findOneAndDelete({
+        _id: urlId,
+        user: userId
+    });
+    
+    if (!deletedUrl) {
+        throw new Error('URL not found or not owned by user');
+    }
+    
+    return { 
+        success: true,
+        message: 'URL deleted successfully',
+        deletedUrl
+    };
+};
