@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import UrlModel from "../models/shortUrl.model.js"
+import shortUrl from "../models/shortUrl.model.js"
 
 export const findUserByEmail = async (email) => {
     return await User.findOne({email});
@@ -20,11 +20,11 @@ export const createUser = async (name, email, password) => {
 }
 
 export const getAllUserUrlsDao = async (id) => {
-    return await UrlModel.find({user: id})
+    return await shortUrl.find({user: id})
 }
 
 export const deleteUrlDao = async (urlId, userId) => {
-    const deletedUrl = await UrlModel.findOneAndDelete({
+    const deletedUrl = await shortUrl.findOneAndDelete({
         _id: urlId,
         user: userId
     });
