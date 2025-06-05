@@ -35,10 +35,13 @@ app.get('/:id', redirectFromShortUrl);
 
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== 'production') {
-    app.listen(PORT || 3000, () => {
-        console.log(`Server is running on port ${PORT || 3000}`);
-    });
-}
+app.listen(PORT, () => {
+  console.log(`
+    Server is running in ${process.env.NODE_ENV || 'development'} mode
+    Listening on port ${PORT}
+    FRONTEND_URL: ${FRONTEND_URL}
+  `);
+});
+
 
 export default app;
