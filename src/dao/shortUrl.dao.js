@@ -1,11 +1,11 @@
-import shortUrl from '../models/shortUrl.model.js';
+import ShortUrl from '../models/shortUrl.model.js';
 import { ConflictError } from '../utils/errorHandler.js';
 
-export const saveShortUrl = async (shortUrl, longUrl, userId) => {
+export const saveShortUrl = async (slug, longUrl, userId) => {
     try{
-        const newUrl = new shortUrl({
+        const newUrl = new ShortUrl({
             full_url: longUrl,
-            short_url: shortUrl,
+            short_url: slug,
         });
         if(userId) {
             newUrl.user = userId;
@@ -22,14 +22,14 @@ export const saveShortUrl = async (shortUrl, longUrl, userId) => {
     }
 }
 
-export const getShortUrl = async (shortUrl) => {
-    return await shortUrl.findOneAndUpdate(
-        {short_url: shortUrl},
+export const getShortUrl = async (slug) => {
+    return await ShortUrl.findOneAndUpdate(
+        {short_url: slug},
         {$inc: {clicks: 1}},
         {new: true}
     );
 }
 
 export const getCustomShortUrl = async (slug) => {
-    return await shortUrl.findOne({short_url:slug});
+    return await ShortUrl.findOne({short_url:slug});
 }
